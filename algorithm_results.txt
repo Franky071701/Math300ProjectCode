@@ -1,0 +1,7 @@
+Grid Size	Algorithm	Time (s)	Nodes Explored	Path Length
+100x100 	A* 	0.024	5566	205
+100x100 	Dijkstra	0.028	7990	205
+200x200 	A* 	0.147	32054	None
+200x200 	Dijkstra	0.117	32054	None
+300x300 	A* 	0.170	36861	619
+300x300 	Dijkstra	0.269	71635	615
