@@ -1,0 +1,9 @@
+Grid Size	Algorithm	Avg Time (s)	Avg Nodes	Avg Path Length
+50x50	       A*	       0.0068	       1709	        101.0
+50x50	     Dijkstra	   0.0069	       2003	        101.0
+300x300	       A*	       0.2689	       58681	    622.0
+300x300	     Dijkstra	   0.2673	       71797	    616.0
+500x500	       A*	       0.4731	       97596	    1044.0
+500x500	     Dijkstra	   0.5309	       133110 	    1038.0
+1000x1000	   A*	       3.1463	       587477	    2079.7
+1000x1000	 Dijkstra	   3.5552	       798327	    2073.0

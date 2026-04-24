@@ -1,49 +1,49 @@
 import heapq
-from utils.algo_helpers import get_neighbors
+from utils.algo_helpers_2D import get_neighbors
 # taking in the grid, a start point and the end goal
 def dijkstra(grid, start, goal):
+    nodes_count = 0
+    nodes_visited = []
     
-    #Initialize distances and the priority queue
+    count = 0
+    pq = [(0, count, start)]
+    
+    parent = {}
     distances = {start: 0}
-    priority_queue = [(0, start)]
-    
-    #Tracking path and visited nodes for the visualization
-    came_from = {start: None}
-    visited = []
-    
-    while priority_queue:
-        current_cost, current_node = heapq.heappop(priority_queue)
-        
-        #Track the order of travel for visuals
-        visited.append(current_node)
-        
-        #Hit the goal, reconstruct the path backwards and return
-        if current_node == goal:
-            path = []
-            curr = goal
-            while curr is not None:
-                path.append(curr)
-                curr = came_from[curr]
-            path.reverse()
-            return path, visited
-            
-        #Optimization check
-        if current_cost > distances.get(current_node, float('inf')):
+    closed_set = set()
+
+    while pq:
+        current_cost, _, current = heapq.heappop(pq)
+
+        if current in closed_set:
             continue
-            
-        #Check all neighbors with `get_neighbors` function (Bryan Gave)
-        for neighbor in get_neighbors(current_node, grid):
-            #The cost to move
+
+        nodes_count += 1
+        nodes_visited.append(current)
+        closed_set.add(current)
+
+        if current == goal:
+            return reconstruct_path(parent, start, goal), nodes_count, nodes_visited
+
+        for neighbor in get_neighbors(current, grid):
             weight = grid[neighbor[0]][neighbor[1]]
             new_cost = current_cost + weight
-            
-            #New Shorter Path, update it
+
             if neighbor not in distances or new_cost < distances[neighbor]:
                 distances[neighbor] = new_cost
-                came_from[neighbor] = current_node
-                heapq.heappush(priority_queue, (new_cost, neighbor))
-                
-    #Return empty path if no path is found, and the visited nodes for visual
-    return None, visited
+                parent[neighbor] = current
+                count += 1
+                heapq.heappush(pq, (new_cost, count, neighbor))
 
+    return None, nodes_count, nodes_visited
 
+# for making the best path
+def reconstruct_path(parent, start, goal):
+    path = []
+    current = goal
+    while current != start:
+        path.append(current)
+        current = parent[current]
+    path.append(start)
+    path.reverse()
+    return path

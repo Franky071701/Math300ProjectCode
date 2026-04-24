@@ -3,7 +3,7 @@
 # using the heapq module for a priority queue, and for pushing/popping nodes
 import heapq
 # using the helper functions that were made
-from utils.algo_helpers import get_neighbors, heuristic
+from utils.algo_helpers_2D import get_neighbors, heuristic
 
 
 # The actual A* algorithm
@@ -13,40 +13,41 @@ def a_star_search(grid, start, goal):
     nodes_visited = []
 
     # A priority queue
-    pq = []
-    heapq.heappush(pq, (0, start))
+    count = 0
+    pq = [(0, count, start)]    # to prevent tie-breaking issues
+   
 
     # Trackers
     parent = {}
     g_score = {start: 0}
 
+    # Using a set for O(1) lookup speed during the search
+    closed_set = set()
+
     while pq:
-        # Extracting the node with the lowest priority/cost from the heap, _ is used for ordering in the heap but not needed for the path logic
-        _, current = heapq.heappop(pq)   
-        # updating the search metrics and visit history    
+        f, _, current = heapq.heappop(pq)
+        
+        if current in closed_set:
+            continue
+            
         nodes_count += 1
         nodes_visited.append(current)
+        closed_set.add(current)
         
-        # if the target was reached, then stop immediately 
         if current == goal:
             return reconstruct_path(parent, start, goal), nodes_count, nodes_visited
-        # Exploring adjacent tiles
+
         for neighbor in get_neighbors(current, grid):
-            # Calculating the 'tentative' g_score: Current cost + neighbor's weight
-            # This accounts for 'difficult terrain' (weight 5) vs 'normal' (weight 1)
             weight = grid[neighbor[0]][neighbor[1]]
             tentative_g_score = g_score[current] + weight
 
-            #If this path to the neighbor is the best we've found so far
             if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
-                # Record the better path
                 parent[neighbor] = current
                 g_score[neighbor] = tentative_g_score
-                # f(n) = g(n) + h(n), the "intelligence" of A*
                 f_score = tentative_g_score + heuristic(neighbor, goal)
-                heapq.heappush(pq, (f_score, neighbor))
+                count += 1
+                heapq.heappush(pq, (f_score, count, neighbor))
 
-    # Return None if the goal is unreachable (surrounded by obstacles)
     return None, nodes_count, nodes_visited
 
 
@@ -54,13 +55,11 @@ def a_star_search(grid, start, goal):
 def reconstruct_path(parent, start, goal):
     path = []
     current = goal
-
     while current != start:
         path.append(current)
         current = parent[current]
     path.append(start)
     path.reverse()
-
     return path
 
     
