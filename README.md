@@ -22,7 +22,7 @@ In order to test this locally (on your own computer), there are 2 things that yo
      pip install <the module name>
      ```
 ### How to run
-There are to ways to run a file
+There are two ways to run a file
 1. More technical way
   ```
   Windows: path\to\env\Scripts\python.exe your_script.py.
