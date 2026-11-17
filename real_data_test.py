@@ -10,12 +10,14 @@ import traceback
 from algorithms.a_star_on_graph import a_star_on_graph
 from compare import compare_algorithms # use later
 from utils.algo_helpers_RealData import create_graph_gif, get_coords
+from algorithms.duan_sssp_on_graph import duan_sssp_on_graph
+from algorithms.dijkstras_on_graph import dijkstra_on_graph
 
 def run_real_data():
         csv_filename = "real_data_results.txt"
     
         # Setting up the Graph Data
-        print("Testing A* with Richland Real Data...")
+        print("Testing Duan's SSSP vs Dijkstra with Richland Real Data...")
         place = "Richland, Washington, USA"
         graph = ox.graph_from_place(place, network_type='walk')
 
@@ -24,37 +26,37 @@ def run_real_data():
         start_node = ox.nearest_nodes(graph, start_lat_lon[1], start_lat_lon[0])
         goal_node = ox.nearest_nodes(graph, goal_lat_lon[1], goal_lat_lon[0])
 
-        # Running A*
-        start_time_a = time.perf_counter()
-        path_a, count_a, visited_a = a_star_on_graph(graph, start_node, goal_node)
-        end_time_a = time.perf_counter()
-        duration = end_time_a - start_time_a
+        # Running Duan's SSSP
+        start_time_duan = time.perf_counter()
+        path_duan, count_duan, visited_duan = duan_sssp_on_graph(graph, start_node, goal_node)
+        end_time_duan = time.perf_counter()
+        duration_duan = end_time_duan - start_time_duan
 
-        # Running Dijkstras (NEED TO DO THIS)
+        # Running Dijkstras
+        start_time_dijkstra = time.perf_counter()
+        path_dijkstra, count_dijkstra, visited_dijkstra = dijkstra_on_graph(graph, start_node, goal_node)
+        end_time_dijkstra = time.perf_counter()
+        duration_dijkstra = end_time_dijkstra - start_time_dijkstra
 
         # Opening a file and writing data
         # Using 'a' (append) if you want to keep old results, or 'w' to overwrite
         with open(csv_filename, mode="w", newline='') as file:
-            writer = csv.writer(file, delimiter="\t")
-            
-            # Write Header
-            writer.writerow(["Location", "Algorithm", "Time (s)", "Nodes Explored", "Path Length"])
-            
-            if path_a:
-                print(f"SUCCESS! Path found in {duration:.4f} seconds.")
-                # Calculating the path length (number of nodes in this case)
-                path_len = len(path_a)
-                
-                # Writing the result row inside the 'with' block
-                writer.writerow([place, "A*", f"{duration:.4f}", count_a, path_len])
-                
-                # Visuals
-                fig, ax = ox.plot_graph_route(graph, path_a, route_color="magenta", show=False)
-                plt.show()
-                create_graph_gif(graph, visited_a, path_a, "a_star_richland.gif")
-            else:
-                print("FAILURE: No path found.")
-                writer.writerow([place, "A*", "N/A", count_a, "0"])
+        writer = csv.writer(file, delimiter="\t")
+        writer.writerow(["Location", "Algorithm", "Time (s)", "Nodes Explored", "Path Length"])
+        
+        if path_d:
+            print(f"Dijkstra SUCCESS! Time: {duration_d:.4f}s, Nodes: {count_d}")
+            writer.writerow([place, "Dijkstra", f"{duration_d:.4f}", count_d, len(path_d)])
+            create_graph_gif(graph, visited_d, path_d, "dijkstra_richland.gif")
+        else:
+            writer.writerow([place, "Dijkstra", "N/A", count_d, "0"])
+
+        if path_s:
+            print(f"Duan SSSP SUCCESS! Time: {duration_s:.4f}s, Nodes: {count_s}")
+            writer.writerow([place, "Duan SSSP", f"{duration_s:.4f}", count_s, len(path_s)])
+            create_graph_gif(graph, visited_s, path_s, "duan_sssp_richland.gif")
+        else:
+            writer.writerow([place, "Duan SSSP", "N/A", count_s, "0"])
 
 if __name__ == "__main__":
     run_real_data()
