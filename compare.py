@@ -8,7 +8,7 @@ def compare_algorithms(grid, path_a, visited_a, path_d, visited_d, size):
     fig, axes = plt.subplots(2, 2, figsize=(12, 8))
 
     # ======================
-    # A* PATH (Top Left)
+    # Duan SSSP PATH (Top Left)
     # ======================
     ax = axes[0, 0]  # Updated index
     ax.imshow(grid == -1, cmap="Greys")
@@ -20,7 +20,7 @@ def compare_algorithms(grid, path_a, visited_a, path_d, visited_d, size):
     if path_a:
         py, px = zip(*path_a)
         ax.plot(px, py, color="magenta", linewidth=2)
-    ax.set_title("A* Search Path")
+    ax.set_title("Duan SSSP Path")
     ax.axis("off")
 
     # ======================
@@ -49,10 +49,10 @@ def compare_algorithms(grid, path_a, visited_a, path_d, visited_d, size):
                 matrix[y, x] += 1
         return matrix
 
-    # A* Heatmap (Bottom Left)
+    # Duan SSSP Heatmap (Bottom Left)
     density_a = get_density_matrix(visited_a, size)
     sns.heatmap(density_a, ax=axes[1, 0], cmap="YlOrRd", cbar=False, xticklabels=False, yticklabels=False)
-    axes[1, 0].set_title("A* Search Density (Heatmap)")
+    axes[1, 0].set_title("Duan SSSP Density (Heatmap)")
 
     # Dijkstra Heatmap (Bottom Right)
     density_d = get_density_matrix(visited_d, size)
