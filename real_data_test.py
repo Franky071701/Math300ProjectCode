@@ -41,22 +41,22 @@ def run_real_data():
         # Opening a file and writing data
         # Using 'a' (append) if you want to keep old results, or 'w' to overwrite
         with open(csv_filename, mode="w", newline='') as file:
-        writer = csv.writer(file, delimiter="\t")
-        writer.writerow(["Location", "Algorithm", "Time (s)", "Nodes Explored", "Path Length"])
+            writer = csv.writer(file, delimiter="\t")
+            writer.writerow(["Location", "Algorithm", "Time (s)", "Nodes Explored", "Path Length"])
         
-        if path_d:
-            print(f"Dijkstra SUCCESS! Time: {duration_d:.4f}s, Nodes: {count_d}")
-            writer.writerow([place, "Dijkstra", f"{duration_d:.4f}", count_d, len(path_d)])
-            create_graph_gif(graph, visited_d, path_d, "dijkstra_richland.gif")
-        else:
-            writer.writerow([place, "Dijkstra", "N/A", count_d, "0"])
+            if path_dijkstra:
+                print(f"Dijkstra SUCCESS! Time: {duration_dijkstra:.4f}s, Nodes: {count_dijkstra}")
+                writer.writerow([place, "Dijkstra", f"{duration_dijkstra:.4f}", count_dijkstra, len(path_dijkstra)])
+                create_graph_gif(graph, visited_dijkstra, path_dijkstra, "dijkstra_richland.gif")
+            else:
+                writer.writerow([place, "Dijkstra", "N/A", count_dijkstra, "0"])
 
-        if path_s:
-            print(f"Duan SSSP SUCCESS! Time: {duration_s:.4f}s, Nodes: {count_s}")
-            writer.writerow([place, "Duan SSSP", f"{duration_s:.4f}", count_s, len(path_s)])
-            create_graph_gif(graph, visited_s, path_s, "duan_sssp_richland.gif")
-        else:
-            writer.writerow([place, "Duan SSSP", "N/A", count_s, "0"])
+            if path_duan:
+                print(f"Duan SSSP SUCCESS! Time: {duration_duan:.4f}s, Nodes: {count_duan}")
+                writer.writerow([place, "Duan SSSP", f"{duration_duan:.4f}", count_duan, len(path_duan)])
+                create_graph_gif(graph, visited_duan, path_duan, "duan_sssp_richland.gif")
+            else:
+                writer.writerow([place, "Duan SSSP", "N/A", count_duan, "0"])
 
 if __name__ == "__main__":
     run_real_data()
