@@ -6,6 +6,7 @@ from compare import compare_algorithms
 from algorithms.A_star import a_star_search
 from algorithms.dijkstras import dijkstra
 from animate_comparison import create_search_gif
+from algorithms.duan_et_al import duan_et_al_sssp
 
 
 # initializing some sizes
@@ -37,9 +38,9 @@ def run_multiple_experiments():
                 grid = generate_grid(size)
                 start, goal = (0, 0), (size - 1, size - 1)
 
-                # A* Run
+                # Duan Run
                 t0 = time.perf_counter()
-                p_a, n_a, v_a = a_star_search(grid, start, goal)
+                p_a, n_a, v_a = duan_et_al_sssp(grid, start, goal)
                 results_a['time'].append(time.perf_counter() - t0)
                 results_a['nodes'].append(n_a)
                 if p_a: results_a['path_len'].append(len(p_a))
