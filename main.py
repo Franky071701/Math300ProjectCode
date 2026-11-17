@@ -4,6 +4,7 @@ from utils.grid_gen import generate_grid
 from compare import compare_algorithms
 from algorithms.A_star import a_star_search
 from algorithms.dijkstras import dijkstra
+from algorithms.duan_sssp import duan_et_al_sssp
 
 
 # initializing some sizes
@@ -28,24 +29,22 @@ def run_multiple_experiments():
             start = (0, 0)
             goal = (size - 1, size - 1)
 
-            # A* plots and time
+            # Duan plots and time
             t0 = time.perf_counter()
-            path_a, nodes_a, visited_a = a_star_search(grid, start, goal)
-
-            time_a = time.perf_counter() - t0
+            path_duan, nodes_duan, visited_duan = duan_et_al_sssp(grid, start, goal)
+            time_duan = time.perf_counter() - t0
 
             # Dijstras time and plots
             t0 = time.perf_counter()
             path_d, visited_d = dijkstra(grid, start, goal)
-
             time_d = time.perf_counter() - t0
             nodes_d = len(visited_d)
 
-            print("\n== A* ==")
-            print(f"Time: {time_a:.3f}s")
-            print(f"Nodes explored: {nodes_a}")
-            path_len_a = len(path_a) if path_a else "None"
-            print(f"Path Length: {path_len_a}")
+            print("\n== Duan SSSP ==")
+            print(f"Time: {time_duan:.3f}s")
+            print(f"Nodes explored: {nodes_duan}")
+            path_len_duan = len(path_duan) if path_duan else "None"
+            print(f"Path Length: {path_len_duan}")
 
 
             print("\nDijkstras")
@@ -54,13 +53,13 @@ def run_multiple_experiments():
             path_len_d = len(path_d) if path_d else "None"
             print(f"Path Length: {path_len_d}")
     
-            # Write A* row
-            writer.writerow([f"{size}x{size} ", "A* ", f"{time_a:.3f}", nodes_a, path_len_a])
+            # Write Duan SSSP row
+            writer.writerow([f"{size}x{size} ", "Duan SSSP", f"{time_duan:.3f}", nodes_duan, path_len_duan])
             # Write Dijkstra row
             writer.writerow([f"{size}x{size} ", "Dijkstra", f"{time_d:.3f}", nodes_d, path_len_d])
 
             # comparing the plots
-            compare_algorithms(grid, path_a, visited_a, path_d, visited_d, size)
+            compare_algorithms(grid, path_duan, visited_duan, path_d, visited_d, size)
 
     print(f"\nResults successfully saved to {csv_filename}!")
 
