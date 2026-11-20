@@ -25,7 +25,7 @@ def run_real_data():
         goal_lat_lon = (46.226, -119.227)   # columbia center mall
         start_node = ox.nearest_nodes(graph, start_lat_lon[1], start_lat_lon[0])
         goal_node = ox.nearest_nodes(graph, goal_lat_lon[1], goal_lat_lon[0])
-
+        
         # Running Duan's SSSP
         start_time_duan = time.perf_counter()
         path_duan, count_duan, visited_duan = duan_sssp_on_graph(graph, start_node, goal_node)
@@ -37,6 +37,9 @@ def run_real_data():
         path_dijkstra, count_dijkstra, visited_dijkstra = dijkstra_on_graph(graph, start_node, goal_node)
         end_time_dijkstra = time.perf_counter()
         duration_dijkstra = end_time_dijkstra - start_time_dijkstra
+
+        if path_dijkstra and path_duan:
+            print(f"Paths match in length: {len(path_dijkstra) == len(path_duan)}")
 
         # Opening a file and writing data
         # Using 'a' (append) if you want to keep old results, or 'w' to overwrite
