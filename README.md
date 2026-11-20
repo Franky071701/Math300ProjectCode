@@ -11,7 +11,7 @@ A Python implementation and performance comparison of Dijkstra's algorithm (1959
 
 2. Install the required packages:
    ```bash
-   pip install numpy matplotlib seaborn osmnx networkx pillow
+   pip install numpy matplotlib seaborn osmnx networkx pillow scikit-learn
      ```
 ### How to run
 There are two ways to run a file
