@@ -23,15 +23,17 @@ def run_real_data():
 
         # Show Overpass progress/retries in the terminal
         ox.settings.log_console = True
-        ox.settings.overpass_url = "https://overpass.kumi.systems/api"
+        
 
-        graph_file = "richland_walk.graphml"
+        graph_file = "richland_drive.graphml"
         if os.path.exists(graph_file):
             print("Loading cached graph...")
             graph = ox.load_graphml(graph_file)
         else:
             print("Downloading graph from Overpass...")
-            graph = ox.graph_from_place(place, network_type='walk')
+            # Midpoint between WSU Tri-Cities and Columbia Center Mall (7.5 km radius)
+            center = (46.278, -119.2435)
+            graph = ox.graph_from_point(center, dist=7500, network_type='drive')
             ox.save_graphml(graph, graph_file)
 
         start_lat_lon = (46.33, -119.26)    # wsu tri cities campus
