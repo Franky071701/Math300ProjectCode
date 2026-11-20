@@ -6,7 +6,7 @@ from compare import compare_algorithms
 from algorithms.A_star import a_star_search
 from algorithms.dijkstras import dijkstra
 from animate_comparison import create_search_gif
-from algorithms.duan_et_al import duan_et_al_sssp
+from algorithms.duan_sssp import duan_et_al_sssp
 
 
 # initializing some sizes
@@ -60,7 +60,7 @@ def run_multiple_experiments():
             g, final_pa, final_va, final_pd, final_vd = last_visual_data
             
             if final_pa:
-                create_search_gif(g, final_va, final_pa, f"astar_{size}.gif", f"A* Progress {size}x{size}", size)
+                create_search_gif(g, final_va, final_pa, f"duan_sssp_{size}.gif", f"Duan SSSP Progress {size}x{size}", size)
             if final_pd:
                 create_search_gif(g, final_vd, final_pd, f"dijkstra_{size}.gif", f"Dijkstra Progress {size}x{size}", size)
 
@@ -73,11 +73,11 @@ def run_multiple_experiments():
             avg_nodes_d = np.mean(results_d['nodes'])
             avg_path_d = np.mean(results_d['path_len']) if results_d['path_len'] else 0
 
-            print(f"A* Average Time: {avg_time_a:.4f}s | Nodes: {int(avg_nodes_a)}")
+            print(f"Duan SSSP Average Time: {avg_time_a:.4f}s | Nodes: {int(avg_nodes_a)}")
             print(f"Dijkstra Average Time: {avg_time_d:.4f}s | Nodes: {int(avg_nodes_d)}")
 
             # Write Averages to CSV
-            writer.writerow([f"{size}x{size}", "A*", f"{avg_time_a:.4f}", int(avg_nodes_a), f"{avg_path_a:.1f}"])
+            writer.writerow([f"{size}x{size}", "Duan SSSP", f"{avg_time_a:.4f}", int(avg_nodes_a), f"{avg_path_a:.1f}"])
             writer.writerow([f"{size}x{size}", "Dijkstra", f"{avg_time_d:.4f}", int(avg_nodes_d), f"{avg_path_d:.1f}"])
 
             # Show the visual for the last run of this size
