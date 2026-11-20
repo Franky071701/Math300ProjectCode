@@ -36,7 +36,7 @@ def run_multiple_experiments():
 
             # Dijstras time and plots
             t0 = time.perf_counter()
-            path_d, visited_d = dijkstra(grid, start, goal)
+            path_d, nodes_d, visited_d = dijkstra(grid, start, goal)
             time_d = time.perf_counter() - t0
             nodes_d = len(visited_d)
 
