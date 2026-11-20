@@ -8,8 +8,7 @@ import time
 import traceback
 import os
 
-from algorithms.a_star_on_graph import a_star_on_graph
-from compare import compare_algorithms # use later
+from utils.compare import compare_algorithms # use later
 from utils.algo_helpers_RealData import create_graph_gif, get_coords
 from algorithms.duan_sssp_on_graph import duan_sssp_on_graph
 from algorithms.dijkstras_on_graph import dijkstra_on_graph

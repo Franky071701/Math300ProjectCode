@@ -1,0 +1,7 @@
+Grid Size	Algorithm	Time (s)	Nodes Explored	Path Length
+100x100 	Duan SSSP	0.039	7954	203
+100x100 	Dijkstra	0.035	7954	203
+200x200 	Duan SSSP	0.160	31943	409
+200x200 	Dijkstra	0.140	31943	409
+300x300 	Duan SSSP	0.357	72246	615
+300x300 	Dijkstra	0.339	72246	615

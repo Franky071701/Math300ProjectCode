@@ -2,10 +2,9 @@ import time
 import csv      # for storing the results
 import numpy as np
 from utils.grid_gen import generate_grid
-from compare import compare_algorithms
-from algorithms.A_star import a_star_search
+from utils.compare import compare_algorithms
 from algorithms.dijkstras import dijkstra
-from animate_comparison import create_search_gif
+from utils.animate_comparison import create_search_gif
 from algorithms.duan_sssp import duan_et_al_sssp
 
 

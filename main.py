@@ -1,8 +1,7 @@
 import time
 import csv      # for storing the results
 from utils.grid_gen import generate_grid
-from compare import compare_algorithms
-from algorithms.A_star import a_star_search
+from utils.compare import compare_algorithms
 from algorithms.dijkstras import dijkstra
 from algorithms.duan_sssp import duan_et_al_sssp
 
