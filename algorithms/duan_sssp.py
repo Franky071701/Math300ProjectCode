@@ -1,6 +1,6 @@
 import heapq
 import math
-from utils.algo_helpers_RealData import get_distance, reconstruct_path
+from utils.algo_helpers_2D import get_neighbors
 
 def duan_et_al_sssp(grid, start, goal):
     nodes_count = 0
@@ -38,19 +38,21 @@ def duan_et_al_sssp(grid, start, goal):
             if current_node == goal:
                 return reconstruct_path(parent, start, goal), nodes_count, nodes_visited
 
+            batch.append((current_cost, current_node))
+
         for current_cost, current in batch:
-            for neighbor in graph.neighbors(current):
-                weight = get_distance(graph, current, neighbor)
+            for neighbor in get_neighbors(current, grid):
+                weight = grid[neighbor[0]][neighbor[1]]
                 new_cost = current_cost + weight
 
                 # If the neighbor has not been visited or we found a shorter path to it, update its cost and parent
                 if neighbor not in distances or new_cost < distances[neighbor]:
                     distances[neighbor] = new_cost
                     parent[neighbor] = current
-                    heapq.heappush(pq, (new_cost, neighbor))
+                    count += 1
+                    heapq.heappush(pq, (new_cost, count, neighbor))
 
     return None, nodes_count, nodes_visited
-
 
 def reconstruct_path(parent, start, goal):
     path = []
