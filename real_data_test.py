@@ -6,6 +6,7 @@ import networkx as nx
 import csv
 import time
 import traceback
+import os
 
 from algorithms.a_star_on_graph import a_star_on_graph
 from compare import compare_algorithms # use later
@@ -19,7 +20,19 @@ def run_real_data():
         # Setting up the Graph Data
         print("Testing Duan's SSSP vs Dijkstra with Richland Real Data...")
         place = "Richland, Washington, USA"
-        graph = ox.graph_from_place(place, network_type='walk')
+
+        # Show Overpass progress/retries in the terminal
+        ox.settings.log_console = True
+        ox.settings.overpass_url = "https://overpass.kumi.systems/api"
+
+        graph_file = "richland_walk.graphml"
+        if os.path.exists(graph_file):
+            print("Loading cached graph...")
+            graph = ox.load_graphml(graph_file)
+        else:
+            print("Downloading graph from Overpass...")
+            graph = ox.graph_from_place(place, network_type='walk')
+            ox.save_graphml(graph, graph_file)
 
         start_lat_lon = (46.33, -119.26)    # wsu tri cities campus
         goal_lat_lon = (46.226, -119.227)   # columbia center mall
