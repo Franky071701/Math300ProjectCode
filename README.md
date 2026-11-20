@@ -8,6 +8,7 @@ A Python implementation and performance comparison of Dijkstra's algorithm (1959
    * **Windows (CMD):** `.venv\Scripts\activate`
    * **Windows (PowerShell):** `.\.venv\Scripts\Activate.ps1`
    * **macOS/Linux:** `source .venv/bin/activate`
+   
 2. Install the required packages:
    ```bash
    pip install numpy matplotlib seaborn osmnx networkx pillow
