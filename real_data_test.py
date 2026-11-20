@@ -31,12 +31,14 @@ def run_real_data():
         else:
             print("Downloading graph from Overpass...")
             # Midpoint between WSU Tri-Cities and Columbia Center Mall (7.5 km radius)
-            center = (46.278, -119.2435)
-            graph = ox.graph_from_point(center, dist=7500, network_type='drive')
+            #center = (46.278, -119.2435)
+            center = (46.2970, -119.1926) #shifted center to avoid missing roads in the graph
+            graph = ox.graph_from_point(center, dist=8500, network_type='drive')
             ox.save_graphml(graph, graph_file)
 
         start_lat_lon = (46.33, -119.26)    # wsu tri cities campus
-        goal_lat_lon = (46.226, -119.227)   # columbia center mall
+        #goal_lat_lon = (46.226, -119.227)   # columbia center mall
+        goal_lat_lon = (46.2647, -119.1190)   # Tri-cities Airport
         start_node = ox.nearest_nodes(graph, start_lat_lon[1], start_lat_lon[0])
         goal_node = ox.nearest_nodes(graph, goal_lat_lon[1], goal_lat_lon[0])
         
