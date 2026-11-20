@@ -2,6 +2,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import osmnx as ox
+ox.settings.overpass_url = "https://maps.mail.ru/osm/tools/overpass/api"
+ox.settings.overpass_rate_limit = False
+ox.settings.requests_timeout = 60
 import networkx as nx
 import csv
 import time
